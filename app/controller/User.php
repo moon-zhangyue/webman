@@ -2,6 +2,7 @@
 
 namespace app\controller;
 
+use support\bootstrap\Redis;
 use support\Db;
 use support\Request;
 
@@ -45,5 +46,12 @@ class User
         $name = Db::table('user')->where('id', $uid)->value('name');
 
         return response("hello $name");
+    }
+
+    public function redis_db(Request $request)
+    {
+        $key = 'test_key';
+        Redis::set($key, rand());
+        return response(Redis::get($key));
     }
 }
